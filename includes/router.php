@@ -1,7 +1,6 @@
 <?php
-
     class router {
-
+        //Initially empty of routes, but gets populated inside of /routes.php
         public $routes = [
             
         ];

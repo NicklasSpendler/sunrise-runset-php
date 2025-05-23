@@ -199,6 +199,12 @@
   .min-h-\[30vh\] {
     min-height: 30vh;
   }
+  .min-h-\[90\%\] {
+    min-height: 90%;
+  }
+  .min-h-\[90vh\] {
+    min-height: 90vh;
+  }
   .min-h-screen {
     min-height: 100vh;
   }

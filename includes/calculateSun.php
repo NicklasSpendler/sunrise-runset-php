@@ -7,7 +7,6 @@ function CalculateSun(){
     $calcMethod = "API";
 
     //gets set when response has arrived
-
     $latitude = null;
     $longitude = null;
     $date = null;
@@ -21,10 +20,10 @@ function CalculateSun(){
     if(isset($_POST['date'])){
         $date = $_POST['date'];
     }else{
+        //If no date is set, create unix for current time;
         $date = time();
     };
 
-    //var_dump($date);
 
     if(empty($latitude) || empty($longitude)){
         echo"Inputs can't be empty";
@@ -32,15 +31,13 @@ function CalculateSun(){
         return;
     }
 
-    
-    //$latitude = filter_input(INPUT_POST, 'latitude', FILTER_SANITIZE_SPECIAL_CHARS);
-    //$latitude = filter_input(INPUT_POST, 'latitude', FILTER_SANITIZE_NUMBER_FLOAT);
-
+    //validates if inputs have correct data. Calls validateInput function
     if(!validateInput($latitude, 'latitude') || !validateInput($longitude, 'longitude')){
         echo "Input has to be valid coordinates";
         return;
     }
 
+    //Method for calculation is set on top of this script.
     if ($calcMethod == "API"){
         CalculateSunUsingAPI($latitude, $longitude, $date);
     }else if ($calcMethod == "PHP"){
@@ -54,10 +51,10 @@ function CalculateSun(){
 
     //Validates if given inputs could be valid coords.
     function validateInput($DataToValidate, string $InputName){
-        //Needs allow fraction to keep the decimal
+        //Needs allow fraction to keep the decimal (FILTER_FLAG_ALLOW_FRACTION)
         $sanitizedInput = filter_input(INPUT_POST, $InputName, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-        if(filter_var($sanitizedInput, FILTER_VALIDATE_FLOAT) !== false){
+        if(filter_var($sanitizedInput, FILTER_VALIDATE_FLOAT)){
             return true;
         }
         return false;
@@ -65,6 +62,7 @@ function CalculateSun(){
 
     //Function for using the API from sunrisesunset.io
     function CalculateSunUsingAPI($latitude, $longitude, $date){
+        //Tries to do the API call.
         try{
             $ch = curl_init();
             $date = $date;
@@ -85,17 +83,17 @@ function CalculateSun(){
             echo"Error: {$e}";
         }
 
-
+        //Maybe the API call returned data, but not what looking for. For example if the API have updated ect.
         if(isset($server_response["results"])){
             $result = $server_response["results"];
         }else {
-            //Fucntion stops here.
+            //If the data is not found, stop function here.
             echo("Error when fetching data");
             return;
         }
 
-        //echo $server_response["results"]["sunrise"];
-        if(isset($result)){
+        //Checks for if the value is empty.
+        if(!empty($result)){
             $sunrise = $server_response["results"]["sunrise"];
             $sunset = $server_response["results"]["sunset"];
             echo("<p>Sunrise: {$sunrise}</p><p>Sunset: {$sunset}</p>");
@@ -107,8 +105,7 @@ function CalculateSun(){
         $sunrise="";
         $sunset="";
 
-        //$date=$date;
-
+        //Handle if the date is set or not set in the app.
         if(!empty($date))
         {
             $date=strtotime($date);
@@ -116,6 +113,7 @@ function CalculateSun(){
             $date=time();
         }
 
+        
         if(isset($latitude)|| isset($longitude)){
             $sunrise = date_sunrise($date, SUNFUNCS_RET_STRING, $latitude, $longitude);
             $sunset = date_sunset($date, SUNFUNCS_RET_STRING, $latitude, $longitude);

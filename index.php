@@ -11,6 +11,7 @@
         <?php
             require('view/partials/nav.php');
 
+            //Handles pages
             require "routes.php";
         ?>
     </main>

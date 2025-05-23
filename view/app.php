@@ -1,4 +1,4 @@
-<div class="min-h-screen flex justify-center items-center">
+<div class="min-h-[90vh] flex justify-center items-center">
     <div class="bg-blue-400 min-h-[30vh] min-w-[50vw] py-5 px-5 rounded-2xl">
         <h2 class="text-center text-2xl">Calculate Sunrise and Sunset</h2>
         <hr>
@@ -25,6 +25,7 @@
 </div>
 
 <script>
+    //Code for the buttons to set predefined values to the input.
     let latitudeInput = document.querySelector("#latitude");
     let longitudeInput = document.querySelector("#longitude");
 
