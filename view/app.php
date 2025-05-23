@@ -1,12 +1,12 @@
 <div class="min-h-screen flex justify-center items-center">
     <div class="bg-blue-400 min-h-[30vh] min-w-[50vw] py-5 px-5 rounded-2xl">
-        <h2 class="text-center">Calculate Sunrise and Sunset</h2>
+        <h2 class="text-center text-2xl">Calculate Sunrise and Sunset</h2>
         <hr>
         <div class="flex flex-1 justify-center items-center">
             <form method="POST" class="flex flex-col gap-2 py-5">
                 <input class="bg-blue-300 rounded-2xl py-0.5 px-1.5" type="text" name="latitude" id="latitude" placeholder="Enter Latitude">
                 <input class="bg-blue-300 rounded-2xl py-0.5 px-1.5"  type="text" name="longitude" id="longitude" placeholder="Enter longitude">
-                <input class="" type="date">
+                <input class="" name="date" type="date">
                 <input class="bg-blue-300 rounded-4xl w-[50%] self-center" type="submit" name="submitBtn" value="Enter">
             </form>
         </div>

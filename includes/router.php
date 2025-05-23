@@ -18,7 +18,7 @@
             if(array_key_exists($path, $this->routes)){
                 require $this->routes[$path];
             }else{
-                require $this->routes['/'];
+                require ("view/notfound.php");
             }
         }
     }

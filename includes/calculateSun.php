@@ -4,14 +4,25 @@ function CalculateSun(){
     
     //Use either API or PHP function
     //Use: "API" | "PHP"
-    $calcMethod = "PHP";
+    $calcMethod = "API";
 
     //gets set when response has arrived
-    $result = null;
 
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
-    $date = $_POST['date'];
+    $latitude = null;
+    $longitude = null;
+    $date = null;
+
+    if(isset($_POST['latitude'])){
+        $latitude = $_POST['latitude'];
+    };
+    if(isset($_POST['longitude'])){
+        $longitude = $_POST['longitude'];
+    };
+    if(isset($_POST['date'])){
+        $date = $_POST['date'];
+    }else{
+        $date = time();
+    };
 
     //var_dump($date);
 
@@ -59,9 +70,9 @@ function CalculateSun(){
             $date = $date;
 
             if (empty($date)){
-                $date = date("y-m-d");
+                $date = date("Y-m-d");
             }
-
+            
             curl_setopt($ch, CURLOPT_URL, 'https://api.sunrisesunset.io/json?lat='. $latitude .'&lng='. $longitude .'&time_format=24&date=' . $date);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -96,12 +107,13 @@ function CalculateSun(){
         $sunrise="";
         $sunset="";
 
-        $date=$date;
+        //$date=$date;
 
-        if(empty($date)){
-            $date=time();
-        }else{
+        if(!empty($date))
+        {
             $date=strtotime($date);
+        }else{
+            $date=time();
         }
 
         if(isset($latitude)|| isset($longitude)){
